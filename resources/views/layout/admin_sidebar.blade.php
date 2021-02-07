@@ -47,16 +47,10 @@ Tip 2: you can also add an image using data-image tag
                     <p>City</p>
                 </a>
             </li>
-            <li class="nav-item @if($activePage == 'notifications') active @endif">
-                <a class="nav-link" href="">
-                    <i class="nc-icon nc-bell-55"></i>
-                    <p>Notifications</p>
-                </a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link active bg-danger" href="">
-                    <i class="nc-icon nc-alien-33"></i>
-                    <p>Upgrade to PRO</p>
+            <li class="nav-item @if($activePage == 'trip') active @endif">
+                <a class="nav-link" href="/trip">
+                    <i class="nc-icon nc-pin-3"></i>
+                    <p>Trip</p>
                 </a>
             </li>
         </ul>
