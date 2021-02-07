@@ -16,12 +16,12 @@
                             </div>
                         </div>
                         <div class="card-body">
-                            <form method="post" action="/add_employee" enctype="multipart/form-data">
+                            <form method="post" action="/add_bus" enctype="multipart/form-data">
                                 @csrf
                                 <div>
                                     <div class="form-group">
                                         <label class="form-control-label"><i class="w3-xxlarge  nc-icon nc-single-02"></i> Police Number</label>
-                                        <input type="text" name="police_name" id="input-name" class="form-control" placeholder="Police Number" required autofocus>
+                                        <input type="text" name="police_number" id="input-name" class="form-control" placeholder="Police Number" required autofocus>
                                     </div>
                                     <div class="form-group">
                                         <label class="form-control-label"><i class="w3-xxlarge nc-icon nc-email-83"></i> Bus Name</label>

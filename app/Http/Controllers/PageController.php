@@ -96,22 +96,22 @@ class PageController extends Controller
     	return redirect('/employee');
     }
 
-	public function savrBus(Request $request) {
+	public function saveBus(Request $request) {
 		$this->validate($request, [
 			'police_number'		=> 'required',
 			'bus_name'			=> 'required|max:100',
-			'capacity'			=> 'required|number',
+			'capacity'			=> 'required|numeric',
 			'brand'				=> 'required|max:100',
-			'type_id'			=> 'required|number'
+			'type_id'			=> 'required|numeric'
 		]);
-
+		
 		$bus = new Bus;
-		$bus->police_number 	= $request->police_number;
-		$bus->bus_name			= $request->bus_name;
-		$bus->capacity 			= $request->capacity;
-		$bus->brand 			= $request->brand;
-		$bus->type_id 			= $request->type_id;
-		$bus->savse();
+		$bus->police_number 	= $request->get('police_number');
+		$bus->bus_name			= $request->get('bus_name');
+		$bus->capacity 			= $request->get('capacity');
+		$bus->brand 			= $request->get('brand');
+		$bus->type_id 			= $request->get('type_id');
+		$bus->save();
 
 		return redirect('/bus');
 	}
