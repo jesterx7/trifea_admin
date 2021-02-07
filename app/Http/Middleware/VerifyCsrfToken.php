@@ -23,5 +23,6 @@ class VerifyCsrfToken extends Middleware
         '/api/get_driver_loc',
         '/api/get_loc',
         '/api/update_user_loc',
+        '/api/user_request',
     ];
 }

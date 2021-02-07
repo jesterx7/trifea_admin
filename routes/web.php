@@ -66,3 +66,4 @@ Route::post('/api/login_user', 'ApiController@loginUserApi');
 Route::post('/api/get_driver_loc', 'ApiController@getDriverLocApi');
 Route::post('/api/get_loc', 'ApiController@getUpdatedDriverLocApi');
 Route::post('/api/update_user_loc', 'ApiController@updateUserLocApi');
+Route::post('/api/user_request', 'ApiController@userRequestApi');
