@@ -157,7 +157,7 @@ class ApiController extends Controller
         $schedule_id    = $_POST['schedule_id'];
         $quantity       = $_POST['quantity'];
         $trip_id        = $_POST['trip_id'];
-        $currentTime    = date('Y-m-d h:i:s');
+        $currentTime    = date('Y-m-d H:i:s');
         
         $value          = array(
                             'user_id' => $user_id,
