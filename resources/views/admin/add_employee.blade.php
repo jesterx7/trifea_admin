@@ -11,15 +11,13 @@
                         <div class="card-header">
                             <div class="row align-items-center">
                                 <div class="col-md-12">
-                                    <h3 class="mb-0">Edit Profile</h3>
+                                    <h3 class="mb-0">Add Employee</h3>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body">
                             <form method="post" action="/add_employee" enctype="multipart/form-data">
                                 @csrf
-
-                                <h6 class="heading-small text-muted mb-4">Add Employee</h6>
                                 <div>
                                     <div class="form-group">
                                         <label class="form-control-label"><i class="w3-xxlarge  nc-icon nc-single-02"></i> Name</label>

@@ -17,7 +17,6 @@ Tip 2: you can also add an image using data-image tag
                     <p>Dashboard</p>
                 </a>
             </li>
-
             <li class="nav-item @if($activePage == 'table') active @endif">
                 <a class="nav-link" href="{{route('employee')}}">
                     <i class="nc-icon nc-notes"></i>
