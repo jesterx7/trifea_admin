@@ -58,4 +58,11 @@ Route::post('/login', 'AuthController@authLogin');
 /* API Routes */
 
 Route::get('/api/get_city_list', 'ApiController@getCityListApi');
+Route::get('/api/get_track_all', 'ApiController@getTrackAllApi');
+Route::get('/api/get_bus_type', 'ApiController@getBusTypeApi');
+Route::get('/api/get_trip', 'ApiController@getTripDataApi');
+
 Route::post('/api/login_user', 'ApiController@loginUserApi');
+Route::post('/api/get_driver_loc', 'ApiController@getDriverLocApi');
+Route::post('/api/get_loc', 'ApiController@getUpdatedDriverLocApi');
+Route::post('/api/update_user_loc', 'ApiController@updateUserLocApi');

@@ -12,6 +12,146 @@ class ApiController extends Controller
     	return response()->json($cities);
     }
 
+    public function getTrackAllApi() {
+        $track = DB::table('track')->get();
+
+        if ($track) {
+            $response['data']       = $track;
+            $response['status']     = true;
+            $response['message']    = 'Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'No Track Found';
+        }
+
+        return response()->json($response);
+    }
+
+    public function getBusTypeApi() {
+        $busType = DB::table('type')->get();
+
+        if ($busType) {
+            $response['data']       = $busType;
+            $response['status']     = true;
+            $response['message']    = 'Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'No Track Found';
+        }
+        
+        return response()->json($response);
+    }
+
+    public function getTripDataApi() {
+        $track_id   = $_GET['track'];
+        $trip       = DB::table('trip as t')
+                        ->select('t.trip_id', 't.fee', 't.city_id', 'c.city_name')
+                        ->join('city as c', 't.city_id', '=', 'c.city_id')
+                        ->where('t.track_id', '=', $track_id)
+                        ->get();
+        
+        if ($trip) {
+            $response['data']       = $trip;
+            $response['status']     = true;
+            $response['message']    = 'Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'No Track Found';
+        }
+        
+        return response()->json($response);
+    }
+
+    public function getDriverLocApi() {
+        $postdata   = file_get_contents("php://input");
+        $request    = json_decode($postdata);
+
+        $track_id   = $request->track;
+        $trip_id    = $request->trip;
+        $type_id    = $request->bus_type;
+
+        $schedule   = DB::table('schedule as s')
+                            ->select('s.schedule_id', 'b.bus_name', 'b.police_number', 't.fee', 't.type_name', 'e.employee_id', 'e.loc_longitude', 'e.loc_latitude')
+                            ->join('bus as b', 's.bus_id', '=', 'b.bus_id')
+                            ->join('type as t', 'b.type_id', '=', 't.type_id')
+                            ->join('employee as e', 's.driver_id', '=', 'e.employee_id')
+                            ->where('t.type_id', '=', $type_id)
+                            ->where('s.track_id', '=', $track_id)
+                            ->get();
+        
+        $schedule_list  = [];
+        $driver_loc     = [];
+        $driver_list    = [];
+        foreach ($schedule as $value) {
+            $schedule_data   = [];
+            $driver_loc      = [];
+            
+            $schedule_data[] = $value->schedule_id;
+            $schedule_data[] = $value->bus_name;
+            $schedule_data[] = $value->police_number;
+            $schedule_data[] = $value->type_name;
+            $schedule_data[] = $value->fee;
+
+            $driver_data['loc_latitude']    = $value->loc_latitude;
+            $driver_data['loc_longitude']   = $value->loc_longitude;
+
+            $schedule_list[] = $schedule_data;
+            $driver_loc[]    = $driver_data;
+            $driver_list[]   = $value->employee_id;
+        }
+
+        $data = ['schedule_list' => $schedule_list, 'driver_loc' => $driver_loc, 'driver_list' => $driver_list];
+        
+        if (count($schedule_list) > 0) {
+            $response['data']       = $data;
+            $response['status']     = true;
+            $reponse['message']     = 'Success';
+        } else {
+            $response['status']     = false;
+            $reponse['message']     = 'Failed';
+        }
+
+        return response()->json($response);
+    }
+
+    public function getUpdatedDriverLocApi() {
+        $driver_list    = $_POST['driver_list'];
+        $driver_loc     = DB::table('employee')
+                                ->select('loc_latitude', 'loc_longitude')
+                                ->whereIn('employee_id', [$driver_list])
+                                ->get();
+        if ($driver_loc) {
+            $response['data']       = $driver_loc;
+            $reponse['status']      = true;
+            $response['message']    = 'Success';
+        } else {
+            $reponse['status']      = false;
+            $response['message']    = 'Failed';
+        }
+
+        return response()->json($response);
+    }
+
+    public function updateUserLocApi() {
+        $user_id    = $_POST['user_id'];
+        $loc_lat    = $_POST['loc_lat'];
+        $loc_lng    = $_POST['loc_lng'];
+
+        $updateLoc  = DB::table('user')
+                            ->where('id', '=', $user_id)
+                            ->update(['loc_latitude' => $loc_lat, 'loc_longitude' => $loc_lng]);
+        
+        if ($updateLoc) {
+            $response['status']  = true;
+            $response['message'] = 'Successs';
+        } else {
+            $response['status']  = false;
+            $response['message'] = 'Failed';
+        }
+
+        return response()->json($response);
+    }
+
     public function loginUserApi() {
         $postdata   = file_get_contents("php://input");
         $request    = json_decode($postdata);
@@ -19,12 +159,13 @@ class ApiController extends Controller
         $username   = $request->username;
         $password   = $request->password;
 
-        if ($username) {
-            $user  = DB::table('user')
-                        ->where('username', '=', $username)
-                        ->first();
+        $user  = DB::table('user')
+                    ->where('username', '=', $username)
+                    ->first();
+                    
+        if ($user) {
             if (password_verify($password, $user->password)) {
-                $response['data']       = $password;
+                $response['data']       = $user;
                 $response['status']     = true;
                 $response['message']    = 'Login Successfull';
             } else {
