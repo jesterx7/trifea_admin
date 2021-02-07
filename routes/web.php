@@ -54,4 +54,8 @@ Route::get('/login', function () {
 })->name('login');
 
 Route::post('/login', 'AuthController@authLogin');
+
+/* API Routes */
+
 Route::get('/api/get_city_list', 'ApiController@getCityListApi');
+Route::post('/api/login_user', 'ApiController@loginUserApi');
