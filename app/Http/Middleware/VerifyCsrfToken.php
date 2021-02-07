@@ -24,5 +24,6 @@ class VerifyCsrfToken extends Middleware
         '/api/get_loc',
         '/api/update_user_loc',
         '/api/user_request',
+        '/api/update_profile',
     ];
 }
