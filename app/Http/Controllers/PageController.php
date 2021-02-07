@@ -90,6 +90,18 @@ class PageController extends Controller
         return view('admin.add_trip', ['track_name' => $track_name, 'city_name' => $city_name]);
     }
 
+    public function addScheduleView() {
+        $driver    = DB::table('employee as e')
+                        ->select()
+                        ->where('e.employee_id', '=', '3')
+                        ->get();
+        $conductor = DB::table('employee as e')
+                        ->where('e.employee_id', '=', '2')
+                        ->get();
+        $track     = DB::table('track')->get();
+        $bus       = DB::table('bus')->get();        
+        return view('admin.add_schedule', ['track' => $track, 'bus' => $bus, 'conductor' => $conductor, 'driver' => $driver]);
+    }
 
     public function saveEmployee(Request $request) {
     	$this->validate($request, [
