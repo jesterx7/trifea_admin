@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
+use App\Bus;
 use DB;
 
 class PageController extends Controller
@@ -46,6 +47,11 @@ class PageController extends Controller
         return view('admin.track', ['tracks' => $tracks]);
     }
 
+	public function cityView() {
+		$city = DB::table('city')->get();
+		return view('admin.city', ['city' => $city]);
+	}
+
     public function addEmployeeView() {
     	$occupations = DB::table('occupation')->get();
     	return view('admin.add_employee', ['occupations' => $occupations]);
@@ -84,4 +90,24 @@ class PageController extends Controller
 
     	return redirect('/employee');
     }
+
+	public function savrBus(Request $request) {
+		$this->validate($request, [
+			'police_number'		=> 'required',
+			'bus_name'			=> 'required|max:100',
+			'capacity'			=> 'required|number',
+			'brand'				=> 'required|max:100',
+			'type_id'			=> 'required|number'
+		]);
+
+		$bus = new Bus;
+		$bus->police_number 	= $request->police_number;
+		$bus->bus_name			= $request->bus_name;
+		$bus->capacity 			= $request->capacity;
+		$bus->brand 			= $request->brand;
+		$bus->type_id 			= $request->type_id;
+		$bus->savse();
+
+		return redirect('/bus');
+	}
 }

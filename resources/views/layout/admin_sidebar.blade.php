@@ -42,6 +42,12 @@ Tip 2: you can also add an image using data-image tag
                     <p>Track</p>
                 </a>
             </li>
+            <li class="nav-item @if($activePage == 'city') active @endif">
+                <a class="nav-link" href="/city">
+                    <i class="nc-icon nc-pin-3"></i>
+                    <p>City</p>
+                </a>
+            </li>
             <li class="nav-item @if($activePage == 'notifications') active @endif">
                 <a class="nav-link" href="">
                     <i class="nc-icon nc-bell-55"></i>

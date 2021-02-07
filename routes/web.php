@@ -27,7 +27,10 @@ Route::group(['middleware' => ['auth']], function () {
     route::get('/bus', 'PageController@busView')->name('bus');
 
     /* Track Routes */ 
-    route::get('/track', 'PageController@trackView')->name('track');       
+    route::get('/track', 'PageController@trackView')->name('track');
+
+    /* City Routes */
+    route::get('/city', 'PageController@cityView')->name('city');
 });
 
 Route::get('/login', function () {
