@@ -25,6 +25,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* Bus Routes */
     route::get('/bus', 'PageController@busView')->name('bus');
+    route::get('/add_bus', 'PageController@addBusView')->name('add_bus');
+    route::post('/add_bus', 'PageController@saveBus');
 
     /* Track Routes */ 
     route::get('/track', 'PageController@trackView')->name('track');

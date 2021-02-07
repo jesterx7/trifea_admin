@@ -57,6 +57,11 @@ class PageController extends Controller
     	return view('admin.add_employee', ['occupations' => $occupations]);
     }
 
+    public function addBusView() {
+        $type = DB::table('type')->get();
+        return view('admin.add_bus', ['type' => $type]);
+    }
+
     public function saveEmployee(Request $request) {
     	$this->validate($request, [
     		'name'			=> 'required',

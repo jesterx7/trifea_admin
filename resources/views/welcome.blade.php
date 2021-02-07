@@ -49,15 +49,6 @@
                                     <div class="container text-center" >
                                         <button type="submit" class="btn btn-warning btn-wd">Login</button>
                                     </div>
-                                    <div class="d-flex justify-content-between">
-                                        <a class="btn btn-link"  style="color:#23CCEF" href="/password.request">
-                                        Forgot password?
-                                        </a>
-                                        <a class="btn btn-link" style="color:#23CCEF" href="/register">
-                                            Create account
-                                        </a>
-                                    </div>
-                                    
                                 </div>
                             </div>
                         </div>
