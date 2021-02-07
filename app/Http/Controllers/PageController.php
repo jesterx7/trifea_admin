@@ -7,6 +7,7 @@ use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Bus;
 use App\Track;
+use App\City;
 use DB;
 
 class PageController extends Controller
@@ -67,6 +68,10 @@ class PageController extends Controller
         $origin = DB::table('city')->get();
         $destination = DB::table('city')->get();
         return view('admin.add_track', ['origin' => $origin, 'destination' => $destination]);
+    }
+
+    public function addCityView() {
+        return view('admin.add_city');
     }
 
     public function saveEmployee(Request $request) {
@@ -138,4 +143,20 @@ class PageController extends Controller
 
 		return redirect('/track');
 	}
+
+    public function saveCity(Request $request) {
+        $this->validate($request, [
+            'city_name'         => 'required|max:250',
+            'latitude'          => 'required|numeric',
+            'longitude'         => 'required|numeric'
+        ]);
+
+        $city = new City;
+        $city->city_name          = $request->get('city_name');
+        $city->latitude           = $request->get('latitude');
+        $city->longitude          = $request->get('longitude');
+        $city->save();
+
+        return redirect('/city');
+    }
 }

@@ -35,6 +35,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* City Routes */
     route::get('/city', 'PageController@cityView')->name('city');
+    route::get('/add_city', 'PageController@addCityView')->name('add_city');
+    route::post('/add_city', 'PageController@saveCity');
 });
 
 Route::get('/login', function () {
