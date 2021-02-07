@@ -22,6 +22,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* Schedule Routes */
     route::get('/schedule', 'PageController@scheduleView')->name('schedule');
+    route::get('/add_schedule', 'PageController@addScheduleView')->name('add_schedule');
+    route::post('/add_schedule', 'PageController@saveschedule');
 
     /* Bus Routes */
     route::get('/bus', 'PageController@busView')->name('bus');
