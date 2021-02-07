@@ -20,5 +20,8 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         '/api/login_user',
+        '/api/get_driver_loc',
+        '/api/get_loc',
+        '/api/update_user_loc',
     ];
 }
