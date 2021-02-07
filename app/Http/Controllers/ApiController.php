@@ -181,6 +181,53 @@ class ApiController extends Controller
         return response()->json($response);
     }
 
+    public function updateUserProfile() {
+        $postdata   = file_get_contents("php://input");
+        $request    = json_decode($postdata);
+
+        $email      = $request->email;
+        $address    = $request->address;
+        $phone      = $request->phone_number;
+
+        $updateUser = DB::table('user')
+                            ->where('email', '=', $email)
+                            ->update(['address' => $address, 'phone_number' => $phone]);
+        
+        if ($updateUser) {
+            $response['status']     = true;
+            $response['message']    = 'Update Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'Update Failed';
+        }
+
+        return response()->json($response);
+    }
+
+    public function getUserRequestStatusApi() {
+        $user_id    = $_GET['user_id'];
+        $request    = DB::table('request as r')
+                            ->select('b.police_number', 't.track_name', 'p.type_name', 'r.status')
+                            ->join('schedule as s', 's.schedule_id', '=', 'r.schedule_id')
+                            ->join('bus as b', 'b.bus_id', '=', 's.bus_id')
+                            ->join('type as p', 'p.type_id', '=', 'b.type_id')
+                            ->join('track as t', 't.track_id', '=', 's.track_id')
+                            ->where('user_id', '=', $user_id)
+                            ->take(5)
+                            ->orderBy('date_time', 'DESC')
+                            ->get();
+        if(count($request) > 0) {
+            $response['data']       = $request;
+            $response['status']     = true;
+            $response['message']    = 'Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'No Request Found';
+        }
+
+        return response()->json($response);
+    }
+
     public function loginUserApi() {
         $postdata   = file_get_contents("php://input");
         $request    = json_decode($postdata);
