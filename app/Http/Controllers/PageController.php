@@ -8,6 +8,7 @@ use App\User;
 use App\Bus;
 use App\Track;
 use App\City;
+use App\Trip;
 use DB;
 
 class PageController extends Controller
@@ -54,6 +55,15 @@ class PageController extends Controller
 		return view('admin.city', ['city' => $city]);
 	}
 
+    public function tripView() {
+        $trip = DB::table('trip as t')
+                    ->select('t.trip_id', 'k.track_id', 'k.track_name', 'c.city_id', 'c.city_name', 't.fee')
+                    ->join('city as c', 'c.city_id', '=', 't.city_id')
+                    ->join('track as k', 'k.track_id', '=', 't.track_id')
+                    ->get();
+        return view('admin.trip', ['trip' => $trip]);
+    }
+
     public function addEmployeeView() {
     	$occupations = DB::table('occupation')->get();
     	return view('admin.add_employee', ['occupations' => $occupations]);
@@ -73,6 +83,13 @@ class PageController extends Controller
     public function addCityView() {
         return view('admin.add_city');
     }
+
+    public function addTripView() {
+        $track_name = DB::table('track')->get();
+        $city_name = DB::table('city')->get();
+        return view('admin.add_trip', ['track_name' => $track_name, 'city_name' => $city_name]);
+    }
+
 
     public function saveEmployee(Request $request) {
     	$this->validate($request, [
@@ -158,5 +175,21 @@ class PageController extends Controller
         $city->save();
 
         return redirect('/city');
+    }
+
+    public function saveTrip(Request $request) {
+        $this->validate($request, [
+            'track_name'         => 'required|numeric',
+            'city_name'          => 'required|numeric',
+            'fee'                => 'required|numeric'
+        ]);
+
+        $trip = new Trip;
+        $trip->track_id          = $request->get('track_name');
+        $trip->city_id           = $request->get('city_name');
+        $trip->fee               = $request->get('fee');
+        $trip->save();
+
+        return redirect('/trip');
     }
 }

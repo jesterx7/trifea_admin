@@ -37,6 +37,11 @@ Route::group(['middleware' => ['auth']], function () {
     route::get('/city', 'PageController@cityView')->name('city');
     route::get('/add_city', 'PageController@addCityView')->name('add_city');
     route::post('/add_city', 'PageController@saveCity');
+
+    /* Trip Routes */
+    route::get('/trip', 'PageController@tripView')->name('trip');
+    route::get('/add_trip', 'PageController@addTripView')->name('add_trip');
+    route::post('/add_trip', 'PageController@saveTrip');
 });
 
 Route::get('/login', function () {
