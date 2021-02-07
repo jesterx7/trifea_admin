@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\User;
 use App\Bus;
+use App\Track;
 use DB;
 
 class PageController extends Controller
@@ -110,7 +111,7 @@ class PageController extends Controller
 			'brand'				=> 'required|max:100',
 			'type_id'			=> 'required|numeric'
 		]);
-		
+
 		$bus = new Bus;
 		$bus->police_number 	= $request->get('police_number');
 		$bus->bus_name			= $request->get('bus_name');
@@ -120,5 +121,21 @@ class PageController extends Controller
 		$bus->save();
 
 		return redirect('/bus');
+	}
+
+	public function saveTrack(Request $request) {
+		$this->validate($request, [
+			'track_name'		=> 'required|max:250',
+			'origin'			=> 'required|numeric',
+			'destination'		=> 'required|numeric'
+		]);
+		
+		$track = new Track;
+		$track->track_name 			= $request->get('track_name');
+		$track->city_origin_id		= $request->get('origin');
+		$track->city_destination_id = $request->get('destination');
+		$track->save();
+
+		return redirect('/track');
 	}
 }
