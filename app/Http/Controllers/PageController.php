@@ -62,6 +62,12 @@ class PageController extends Controller
         return view('admin.add_bus', ['type' => $type]);
     }
 
+    public function addTrackView() {
+        $origin = DB::table('city')->get();
+        $destination = DB::table('city')->get();
+        return view('admin.add_track', ['origin' => $origin, 'destination' => $destination]);
+    }
+
     public function saveEmployee(Request $request) {
     	$this->validate($request, [
     		'name'			=> 'required',

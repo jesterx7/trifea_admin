@@ -38,8 +38,8 @@
                                     <div class="form-group">
                                         <label class="form-control-label"><i class="w3-xxlarge nc-icon nc-bag"></i> Bus Type</label>
                                         <select name="type_id" class="form-control" required>
-                                            @foreach($type as $key => $type)
-                                                <option value="{{ $type->type_id }}">{{ $type->type_name }}</option>
+                                            @foreach($type as $key => $data)
+                                                <option value="{{ $data->type_id }}">{{ $data->type_name }}</option>
                                             @endforeach
                                         </select>
                                     </div>

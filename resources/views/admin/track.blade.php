@@ -8,7 +8,7 @@
                     <div class="card strpied-tabled-with-hover">
                         <div class="card-header ">  
                             <h4 class="card-title table-tittle">Track</h4>
-                            <a class="btn btn-info btn-fill btn-wd add-table" href="{{route('add_employee')}}">
+                            <a class="btn btn-info btn-fill btn-wd add-table" href="{{route('add_track')}}">
                                 Add
                             </a>
                         </div>

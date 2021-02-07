@@ -30,6 +30,8 @@ Route::group(['middleware' => ['auth']], function () {
 
     /* Track Routes */ 
     route::get('/track', 'PageController@trackView')->name('track');
+    route::get('/add_track', 'PageController@addTrackView')->name('add_track');
+    route::post('/add_track', 'PageController@saveTrack');
 
     /* City Routes */
     route::get('/city', 'PageController@cityView')->name('city');
