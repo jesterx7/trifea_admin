@@ -152,6 +152,35 @@ class ApiController extends Controller
         return response()->json($response);
     }
 
+    public function userRequestApi() {
+        $user_id        = $_POST['user_id'];
+        $schedule_id    = $_POST['schedule_id'];
+        $quantity       = $_POST['quantity'];
+        $trip_id        = $_POST['trip_id'];
+        $currentTime    = date('Y-m-d h:i:s');
+        
+        $value          = array(
+                            'user_id' => $user_id,
+                            'schedule_id' => $schedule_id,
+                            'trip_id' => $trip_id,
+                            'quantity' => $quantity,
+                            'date_time' => $currentTime,
+                            'status' => 'PEND'
+                        );
+        $insertRequest  = DB::table('request')
+                                ->insert($value);
+        
+        if ($insertRequest) {
+            $response['status']     = true;
+            $response['message']    = 'Request Success';
+        } else {
+            $response['status']     = false;
+            $response['message']    = 'Request Failed';
+        }
+
+        return response()->json($response);
+    }
+
     public function loginUserApi() {
         $postdata   = file_get_contents("php://input");
         $request    = json_decode($postdata);
